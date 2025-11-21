@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Detection Penetration Tester</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">SECURE_PEN_TEST_V1.3</div>
+            <h1>FRAUD EVASION ASSESSOR</h1>
+            <p class="subtitle">Corporate Penetration Testing Tool</p>
+        </header>
+
+        <main>
+            <div class="panel input-panel">
+                <form id="fraudForm">
+                    <section class="input-group">
+                        <h3>1. Target Assessment</h3>
+                        <div class="form-group">
+                            <label for="target_url">Target E-commerce URL</label>
+                            <input type="url" id="target_url" placeholder="https://example-shop.com" required>
+                            <small class="hint">SOURCE: The URL of the payment gateway or checkout page you are
+                                auditing.</small>
+                        </div>
+                    </section>
+
+                    <section class="input-group">
+                        <h3>2. Connection & Geolocation</h3>
+
+                        <div class="form-group">
+                            <label for="ip_address">Transaction IP Address</label>
+                            <input type="text" id="ip_address" placeholder="e.g. 203.0.113.1">
+                            <small class="hint">SOURCE: The IP address of the device making the transaction.</small>
+                        </div>
+
+                        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div>
+                                <label for="billing_lat">Billing Latitude</label>
+                                <input type="number" id="billing_lat" step="0.0001" placeholder="e.g. 40.7128">
+                            </div>
+                            <div>
+                                <label for="billing_lon">Billing Longitude</label>
+                                <input type="number" id="billing_lon" step="0.0001" placeholder="e.g. -74.0060">
+                            </div>
+                        </div>
+                        <small class="hint" style="margin-bottom: 1rem; display: block;">SOURCE: Geocode the billing
+                            address on file.</small>
+
+                        <button type="button" id="calcDistanceBtn"
+                            style="margin-top: 0; margin-bottom: 1.5rem; font-size: 1rem; padding: 10px;">AUTO-CALCULATE
+                            DISTANCE (MAXMIND)</button>
+
+                        <div class="form-group">
+                            <label for="distance_from_home">Geo-IP Distance from Home (km)</label>
+                            <input type="number" id="distance_from_home" step="0.1" value="10.0">
+                            <small class="hint">SOURCE: Calculated distance between Billing Address and Transaction
+                                IP.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="distance_from_last_transaction">Geo-IP Dist. from Last Location (km)</label>
+                            <input type="number" id="distance_from_last_transaction" step="0.1" value="1.0">
+                            <small class="hint">SOURCE: Velocity checks. Calculate distance between current IP and IP of
+                                last known login/purchase.</small>
+                        </div>
+
+                        <div class="checkbox-container">
+                            <label>
+                                <input type="checkbox" id="online_order">
+                                <span class="checkmark"></span>
+                                Online Transaction (CNP)
+                            </label>
+                        </div>
+                        <small class="hint" style="margin-left: 30px;">SOURCE: Transaction type flag (Card Not
+                            Present).</small>
+                    </section>
+
+                    <section class="input-group">
+                        <h3>3. Card Configuration</h3>
+                        <div class="form-group">
+                            <label for="ratio_to_median_purchase_price">Transaction Value Ratio (vs Median)</label>
+                            <input type="number" id="ratio_to_median_purchase_price" step="0.1" value="1.0">
+                            <small class="hint">SOURCE: Transaction Amount / User's Median Transaction History. (e.g.,
+                                $500 / $50 median = 10.0)</small>
+                        </div>
+
+                        <div class="checkbox-grid">
+                            <div class="checkbox-item">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="repeat_retailer" checked>
+                                    <span class="checkmark"></span>
+                                    Known Retailer History
+                                </label>
+                                <small class="hint"><strong>Why it matters:</strong> Fraud models use "Behavioral
+                                    Baselining". Transactions at previously visited merchants are trusted because they
+                                    fit your established pattern.</small>
+                            </div>
+
+                            <div class="checkbox-item">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="used_chip" checked>
+                                    <span class="checkmark"></span>
+                                    Chip Enabled
+                                </label>
+                                <small class="hint"><strong>Why it matters:</strong> EMV Chips generate a unique
+                                    cryptogram for every transaction, making cloning extremely difficult. Non-chip
+                                    (magstripe) swipes are high-risk.</small>
+                            </div>
+
+                            <div class="checkbox-item">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="used_pin_number" checked>
+                                    <span class="checkmark"></span>
+                                    PIN Authenticated
+                                </label>
+                                <small class="hint"><strong>Why it matters:</strong> PINs provide "Something you know"
+                                    authentication (2FA). Liability often shifts to the bank if a PIN is used, so they
+                                    are less likely to block it.</small>
+                            </div>
+                        </div>
+                        <small class="hint">SOURCE: EMV Tags in authorization message (e.g., Tag 9F34 CVM
+                            Results).</small>
+                    </section>
+
+                    <button type="submit" id="analyzeBtn">RUN PENETRATION TEST</button>
+                </form>
+            </div>
+
+            <div class="panel result-panel">
+                <h2>Assessment Result</h2>
+                <div class="gauge-container">
+                    <div class="gauge-bg"></div>
+                    <div class="gauge-fill" id="gaugeFill"></div>
+                    <div class="gauge-cover">
+                        <span id="scoreValue">0%</span>
+                        <span class="label">Bypass Success Score</span>
+                    </div>
+                </div>
+
+                <div id="statusMessage" class="status waiting">READY TO TEST</div>
+
+                <div class="tips-section">
+                    <h3>Vulnerability Report</h3>
+                    <ul id="tipsList">
+                        <li>Configure parameters and run the test to generate a report.</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+
+        <section class="panel documentation-panel">
+            <h2>Documentation & Methodology</h2>
+            <div class="doc-content">
+                <div class="doc-column">
+                    <h3>How Fraud Detection Works</h3>
+                    <p>Modern fraud detection systems use <strong>Machine Learning (ML)</strong> models, such as Random
+                        Forests or Neural Networks, to analyze thousands of data points in real-time. They look for
+                        <em>anomalies</em>—patterns that deviate from a user's normal behavior.
+                    </p>
+                    <p>This tool simulates a <strong>Random Forest Classifier</strong> trained on over 1,000,000 credit
+                        card transactions. It evaluates the probability that a specific transaction configuration will
+                        trigger a fraud alert.</p>
+                </div>
+                <div class="doc-column">
+                    <h3>Key Risk Factors</h3>
+                    <ul>
+                        <li><strong>Geolocation Anomalies:</strong> High distances between the user's home (billing
+                            address) and the transaction IP are strong indicators of account takeover.</li>
+                        <li><strong>Velocity Checks:</strong> "Teleportation" (impossible travel) between the last
+                            transaction location and the current one is a critical red flag.</li>
+                        <li><strong>Spending Patterns:</strong> Transactions significantly larger than the user's median
+                            purchase history (High Ratio) are scrutinized.</li>
+                        <li><strong>Authentication Strength:</strong> Chip & PIN (Card Present) is the gold standard.
+                            Online (CNP) transactions lack this physical proof, increasing risk.</li>
+                    </ul>
+                </div>
+                <div class="doc-column">
+                    <h3>Understanding the Score</h3>
+                    <p><strong>Bypass Success Score</strong> = <code>1.0 - Fraud Probability</code></p>
+                    <ul>
+                        <li><span style="color: var(--accent-color)">High Score (>90%)</span>: The transaction mimics
+                            legitimate behavior perfectly. It is highly likely to bypass automated filters.</li>
+                        <li><span style="color: var(--danger-color)">Low Score (<50%)< /span>: The transaction exhibits
+                                    multiple risk factors. It will likely be blocked or sent for manual review.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
