@@ -1,116 +1,52 @@
-/.vscode
-/02. TCP IP Model CheatSheet - ATech ( Waqas Karim ).pdf
-/abc_decontextualize_com_more_than_you_wanted_to_know_utm_sou.pdf
-/ad_istr_comp.txt
-/ALTOMARE Esercizio Matrice del Rischio.xlsx
-/Altomare Marco - Esercizio Classificazione attacchi e incidenti di sicurezza.xlsx
-/ALTOMARE MARCO - Esercizio Cyber Threat Intelligence(1).xlsx
-/ALTOMARE MARCO - Esercizio Cyber Threat Intelligence.xlsx
-/Altomare Marco Esercizio classificazione attacchi e incidente.xlsx
-/Altomare Marco.docx
-/Antigravity.exe
-/apt10group8.5x11.pdf
-/Apulia_Digital_Maker_Altamura_Fabio_Linux e Shell Scripting.pdf
-/Apulia_Digital_Maker_Felice_Loiodice_Principi di virtualizzazione.pdf
-/bitcoin address generator (address.py).py
-/bruno.json
-/bumblebee
-/bumblebee.zip
-/capture_1763647904488.cap
-/case_input.sh
-/cybersec-lesson-main.zip
-/cybersecurity_lab.md
-/Daniel_in_the_Lions'_Den,_by_Briton_Rivière.jpg
-/db-14930-credentials.txt
-/desktop.ini
-/DOCKER-COMPOSE-GUIDA-CYBERSEC.pdf
-/esercitazione_servless.pdf
-/esercitazione_sicurezza_applicazioni_nel_cloud.pdf
-/esercitazione_sicurezza_dei_dati_in_cloud.pdf
-/esercizi-compose.pdf
-/Esercizio Analisi CVE.xlsx
-/Esercizio Classificazione attacchi e incidenti di sicurezza(1).xlsx
-/Esercizio Classificazione attacchi e incidenti di sicurezza.xlsx
-/Esercizio Cyber Threat Intelligence.xlsx
-/esercizioAnimali(2).ipynb
-/esercizioAnimali(3).ipynb
-/esercizioAnimali.ipynb
-/esercizioprovafinalepythonbruteforce.py
-/evening-classroom-moewalls-com.mp4
-/Feistel e pbox.docx
-/Felice_Loiodice_Basi di linux.pdf
-/Felice_Loiodice_Sistemi Operativi.pdf
-/fiddler_basicauthentication.saz
-/Flowchart.png
-/Framer.exe
-/Funzionamento-20251020T101613Z-1-001.zip
-/giochi per casa
-/Grey-box-testing.png
-/hastune_miku_by_malionette
-/hexagen-image.jpg
-/Il cloud computing tecnologie di riferimento della piattaforma_NEW.pdf
-/inspect_arff.py
-/Jan_Matejko,_Stańczyk.jpg
-/japan-summer-train-moewalls-com.mp4
-/JDER_1.3
-/kali-linux-2025.2-virtualbox-amd64
-/laboratorio.png
-/Laboratorio1.pdf
-/Link per analisi vulnerabilità.txt
-/Marco Altomare - Sentinel Scan __ DOCS.pdf
-/Matrice del rischio.xlsx
-/mrz_reader(1).py
-/mrz_reader(2).py
-/mrz_reader.py
-/mylivewallpapers-com-Neighborhood-Train-4K.mp4
-/non vedo le 5 slide , solo 4 e 5 - non vedo le 5 slide , solo 4 e 5.pdf
-/not-alone
-/not-alone.zip
-/NULL Keep.zip
-/Penetration-Testing-Methodology.png
-/pg_service.conf
-/Presentazione senza titolo.pptx
-/preventivositoweb-1.pdf
-/preventivositoweb.docx
-/preventivositoweb.pdf
-/preventivositoweb_twosizes.pdf
-/preventivo_settembre_novembre_2025twosizes-1.pdf
-/preventivo_sitoweb.pdf
-/progetto_homelab.png
-/pulse
-/putinwave_v_2.c
-/redeclipse-2.0.0-win
-/redeclipse-2.0.0-win.zip
-/repolezione
-/Reti
-/reti.bat
-/Screenshot 2025-11-21 101502.pdf
-/Screenshot 2025-11-21 at 10-04-12 Google AI Studio.png
-/SecretPictures.zip
-/sentinel-scan.zip
-/stixsdo.json
-/student_template.py
-/sunset-japanese-house-moewalls-com.mp4
-/Tekken Tag Tournament (Europe) (En,Fr,De,Es,It) (v1.00).cue
-/Template_microservizio_flusk_docker.zip
-/The-Farmer-was-Replaced-SteamRIP.com
-/The-Farmer-was-Replaced-SteamRIP.com.rar
-/tiger-cloud-db-15312-credentials.txt
-/tokyo-city-streets-moewalls-com.mp4
-/touch-grass-moewalls-com.mp4
-/VA http___rest.vulnweb.com_(1).docx
-/VA http___rest.vulnweb.com_(2)(1).docx
-/VA http___rest.vulnweb.com_(2)(2).docx
-/VA http___rest.vulnweb.com_(2)(3).docx
-/VA http___rest.vulnweb.com_(2)(4).docx
-/VA http___rest.vulnweb.com_(2)(5).docx
-/VA http___rest.vulnweb.com_(2).docx
-/VA http___rest.vulnweb.com_.docx
-/void-live-x86_64-20250202-xfce.iso
-/Vulnerability Assessment - per Eulogic NT - ITS Apulia Digital - Marco Altomare .pdf
-/wallhaven-737zw9.png
-/wallhaven-8gxwwk.jpg
-/wallhaven-gwjrqq.png
-/wifite_scan.log
-/workflow hackaton.png
-/_INTER~1.PDF
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+
+# Models (optional, may be large)
+*.pkl
+*.mmdb
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation build
+docs/_build/
+frontend-demo/build/
+
+# Backup files
+*.bak
+*.backup
+*.orig
