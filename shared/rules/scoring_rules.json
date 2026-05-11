@@ -1,0 +1,56 @@
+{
+    "default": {
+        "geoip_thresholds": {
+            "distance_home_low": 20,
+            "distance_home_medium": 50,
+            "distance_home_high": 100,
+            "distance_last_low": 15,
+            "distance_last_medium": 25,
+            "distance_last_high": 50
+        },
+        "spending_thresholds": {
+            "ratio_low": 1.5,
+            "ratio_medium": 2.5,
+            "ratio_high": 4.0,
+            "ratio_critical": 6.0
+        },
+        "scoring_weights": {
+            "distance_home": 0.15,
+            "distance_last": 0.25,
+            "ratio": 0.20,
+            "retailer_history": 0.10,
+            "has_chip": 0.15,
+            "has_pin": 0.10,
+            "is_online": 0.05
+        },
+        "confidence_thresholds": {
+            "high": 0.3,
+            "medium": 0.15
+        }
+    },
+    "strict": {
+        "geoip_thresholds": {
+            "distance_home_low": 10,
+            "distance_home_medium": 25,
+            "distance_home_high": 50,
+            "distance_last_low": 5,
+            "distance_last_medium": 10,
+            "distance_last_high": 20
+        },
+        "spending_thresholds": {
+            "ratio_low": 1.0,
+            "ratio_medium": 1.5,
+            "ratio_high": 2.5,
+            "ratio_critical": 4.0
+        },
+        "scoring_weights": {
+            "distance_home": 0.20,
+            "distance_last": 0.25,
+            "ratio": 0.25,
+            "retailer_history": 0.05,
+            "has_chip": 0.10,
+            "has_pin": 0.10,
+            "is_online": 0.05
+        }
+    }
+}

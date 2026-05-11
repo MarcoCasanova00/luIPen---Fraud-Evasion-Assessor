@@ -1,0 +1,1 @@
+# Schemas package - JSON validation schemas for API requests

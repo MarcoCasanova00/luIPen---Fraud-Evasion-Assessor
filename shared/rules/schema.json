@@ -1,0 +1,46 @@
+{
+    "description": "Schema for transaction scoring input",
+    "type": "object",
+    "properties": {
+        "target_url": {
+            "type": "string",
+            "description": "URL of the target system being assessed",
+            "format": "uri"
+        },
+        "distance_km": {
+            "type": "number",
+            "description": "Distance from billing address to transaction IP in kilometers",
+            "minimum": 0,
+            "maximum": 20000
+        },
+        "distance_from_last_transaction": {
+            "type": "number",
+            "description": "Distance from last transaction location in kilometers",
+            "minimum": 0,
+            "maximum": 20000
+        },
+        "ratio_to_median_purchase_price": {
+            "type": "number",
+            "description": "Transaction amount divided by user's median spending",
+            "minimum": 0,
+            "maximum": 100
+        },
+        "retailer_history": {
+            "type": "boolean",
+            "description": "Whether the merchant is in user's transaction history"
+        },
+        "has_chip": {
+            "type": "boolean",
+            "description": "Whether transaction uses EMV chip authentication"
+        },
+        "has_pin": {
+            "type": "boolean",
+            "description": "Whether transaction uses PIN verification"
+        },
+        "is_online": {
+            "type": "boolean",
+            "description": "Whether this is a Card-Not-Present (CNP) transaction"
+        }
+    },
+    "required": ["distance_km"]
+}

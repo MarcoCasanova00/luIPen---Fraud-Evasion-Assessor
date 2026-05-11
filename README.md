@@ -1,80 +1,175 @@
 # Fraud Evasion Penetration Testing Tool
 
+A dual-mode project providing both a production Flask backend and a static frontend demo for fraud detection resilience assessment.
+
 ## Overview
-The **Fraud Evasion Penetration Testing Tool** is a specialized web application designed for corporate security teams and penetration testers. It simulates how an attacker might attempt to evade fraud detection systems (specifically those based on Random Forest classifiers) and provides a "Success Score" indicating the likelihood of bypassing these controls.
 
-The tool allows you to assess the resilience of your fraud detection logic against various attack vectors, including:
-- **Geolocation Spoofing**: Testing distance-based anomalies.
-- **Velocity Checks**: Simulating "impossible travel" scenarios.
-- **Card Configuration**: Testing the impact of Chip, PIN, and Retailer History.
+The **Fraud Evasion Penetration Testing Tool** is a defensive security tool designed for corporate security teams and authorized penetration testers. It simulates how fraud detection systems might evaluate transaction patterns, producing a detection resilience score and vulnerability report.
 
-## Features
-- **Bypass Success Score**: Calculates the probability (0-100%) of a transaction bypassing the fraud model.
-- **Vulnerability Report**: Generates detailed, actionable advice on *why* a transaction was flagged (e.g., "Velocity check triggered").
-- **MaxMind GeoIP Integration**: Optional integration with MaxMind GeoLite2 to resolve real IP addresses to locations and calculate distances.
-- **Educational Hints**: In-app explanations of fraud detection concepts like "Behavioral Baselining" and "EMV Liability Shift".
-
-## Prerequisites
-- Python 3.8+
-- `pip` (Python Package Manager)
-
-## Installation
-
-1.  **Clone the repository** (or extract the files):
-    ```bash
-    git clone <repository-url>
-    cd <repository-folder>
-    ```
-
-2.  **Create a Virtual Environment** (Recommended):
-    ```bash
-    python -m venv .venv
-    # Windows
-    .venv\Scripts\activate
-    # Mac/Linux
-    source .venv/bin/activate
-    ```
-
-3.  **Install Dependencies**:
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4.  **MaxMind DB Setup (Optional)**:
-    - To enable the "Auto-Calculate Distance" feature, download the `GeoLite2-City.mmdb` file from [MaxMind](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data).
-    - Place the `.mmdb` file in the root directory of the project.
-    - *Note: The app works without this file, but the IP-to-Location feature will be disabled.*
-
-## Usage
-
-1.  **Train the Model** (First Run Only):
-    The app requires a trained Random Forest model. Run the training script to generate `fraud_model.pkl`:
-    ```bash
-    python train_model.py
-    ```
-
-2.  **Start the Application**:
-    ```bash
-    python app.py
-    ```
-
-3.  **Access the Tool**:
-    Open your web browser and navigate to:
-    [http://127.0.0.1:5000](http://127.0.0.1:5000)
-
-4.  **Run a Test**:
-    - Enter a **Target URL** (e.g., the payment page you are auditing).
-    - Configure the **Connection & Geolocation** settings (or use the Auto-Calculate button if MaxMind is set up).
-    - Configure the **Card Details** (Chip, PIN, etc.).
-    - Click **RUN PENETRATION TEST** to see the Success Score and Vulnerability Report.
+**Purpose:** Educational and authorized security testing only.
 
 ## Project Structure
-- `app.py`: Main Flask application backend.
-- `train_model.py`: Script to train the Machine Learning model.
-- `templates/index.html`: Frontend user interface.
-- `static/style.css`: "Cybersecurity" themed styling.
-- `static/script.js`: Frontend logic and report generation.
-- `requirements.txt`: Python dependencies.
 
-## Disclaimer
-This tool is intended for **educational and authorized testing purposes only**. Do not use this tool to facilitate actual fraud or attack systems you do not own or have explicit permission to test.
+```
+fraud-evasion-assessor/
+├── backend/              # Production Flask application
+│   ├── app/
+│   │   ├── routes/       # Web and API endpoints
+│   │   ├── services/     # Core business logic
+│   │   ├── security/     # Security hardening modules
+│   │   ├── templates/    # Jinja2 templates
+│   │   └── static/       # CSS and JS assets
+│   ├── tests/            # Unit tests
+│   ├── wsgi.py           # WSGI entry point
+│   └── requirements.txt  # Python dependencies
+├── docs/                 # GitHub Pages static demo
+│   ├── index.html
+│   └── assets/
+├── shared/
+│   └── rules/            # Shared configuration files
+├── scripts/              # Automation scripts
+└── .github/workflows/    # GitHub Actions
+```
+
+## Two Modes
+
+### 1. Backend Edition (Production)
+- Flask application with real scoring logic
+- Optional GeoIP integration with MaxMind GeoLite2
+- Secure API endpoints with rate limiting
+- Full vulnerability reporting
+- **Requires Python runtime and dependencies**
+
+### 2. Frontend Demo (Static)
+- Pure HTML/CSS/JS - runs in any browser
+- GitHub Pages compatible
+- Client-side scoring simulation
+- No server required
+- **Suitable for documentation and demonstrations**
+
+## Features
+
+- **Detection Resilience Scoring** - Evaluates transaction patterns against fraud detection criteria
+- **Vulnerability Reports** - Provides findings and recommendations
+- **GeoIP Integration** - Optional IP geolocation with MaxMind GeoLite2
+- **Risk Factor Analysis** - Geolocation, velocity, spending patterns, authentication
+- **Demo Presets** - Quick test configurations
+
+## Quick Start
+
+### Backend Setup
+
+```bash
+# Clone repository
+git clone https://github.com/MarcoCasanova00/fraud-evasion-assessor.git
+cd fraud-evasion-assessor
+
+# Create virtual environment
+python -m venv .venv
+
+# Activate (Windows)
+.venv\Scripts\activate
+
+# Activate (Linux/Mac)
+source .venv/bin/activate
+
+# Install dependencies
+cd backend
+pip install -r requirements.txt
+
+# Train model (optional, uses demo scoring if missing)
+python train_model.py
+
+# Copy environment template
+cp .env.example .env
+
+# Run the application
+python wsgi.py
+```
+
+Visit `http://127.0.0.1:5000`
+
+### Frontend Demo
+
+Simply open `docs/index.html` in any browser, or deploy the `docs/` directory to GitHub Pages.
+
+## API Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/` | GET | Main interface |
+| `/health` | GET | Health check |
+| `/api/score` | POST | Calculate detection resilience score |
+| `/api/report` | POST | Generate vulnerability report |
+| `/api/geoip/distance` | POST | Calculate IP-to-billing distance |
+| `/api/demo-presets` | GET | List available presets |
+
+### Example Request
+
+```bash
+curl -X POST http://localhost:5000/api/score \
+  -H "Content-Type: application/json" \
+  -d '{
+    "target_url": "https://example.com/checkout",
+    "distance_km": 10.0,
+    "distance_from_last_transaction": 5.0,
+    "ratio_to_median_purchase_price": 1.5,
+    "retailer_history": true,
+    "has_chip": true,
+    "has_pin": true,
+    "is_online": false
+  }'
+```
+
+## Configuration
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `SECRET_KEY` | Flask secret key | (generated) |
+| `FLASK_ENV` | Environment mode | development |
+| `GEOIP_DB_PATH` | Path to GeoLite2 database | GeoLite2-City.mmdb |
+| `MODEL_PATH` | Path to ML model | fraud_model.pkl |
+
+## GitHub Pages Deployment
+
+1. Push to main branch
+2. Enable GitHub Pages in repository settings
+3. Select `gh-pages` branch as source
+4. Demo available at `https://username.github.io/repo/`
+
+## Security Disclaimer
+
+**IMPORTANT:** This tool is designed for:
+- Educational purposes
+- Authorized security testing
+- Fraud detection system resilience assessment
+
+**DO NOT use this tool to:**
+- Facilitate actual fraud
+- Attack systems without permission
+- Violate applicable laws
+
+Unauthorized use is strictly prohibited.
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make changes with security best practices
+4. Submit a pull request with description
+
+## License
+
+See [LICENSE](LICENSE) file for details.
+
+## Roadmap
+
+- [ ] Additional ML model training options
+- [ ] Enhanced reporting with charts
+- [ ] API authentication
+- [ ] Multi-language support
+- [ ] Integration test suite
+
+---
+
+**Version:** 2.0 | **Author:** Security Engineering Team

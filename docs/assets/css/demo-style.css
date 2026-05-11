@@ -1,0 +1,436 @@
+:root {
+    --bg-color: #0a0a0a;
+    --panel-bg: #111;
+    --text-color: #e0e0e0;
+    --accent-color: #00ff41;
+    --warning-color: #ffaa00;
+    --danger-color: #ff3333;
+    --border-color: #333;
+    --font-family: 'Share Tech Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-family);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    background-image: linear-gradient(rgba(0, 20, 0, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 20, 0, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.demo-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--warning-color);
+    color: #000;
+    text-align: center;
+    padding: 8px;
+    font-size: 0.85rem;
+    z-index: 1000;
+    font-weight: bold;
+}
+
+.demo-banner span {
+    background: #000;
+    color: var(--warning-color);
+    padding: 2px 8px;
+    margin-right: 8px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1100px;
+    padding: 2rem;
+    padding-top: 3rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 1rem;
+    position: relative;
+}
+
+.logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 0.8rem;
+    color: var(--accent-color);
+    opacity: 0.7;
+}
+
+h1 {
+    color: var(--text-color);
+    letter-spacing: 3px;
+    margin: 0;
+    text-transform: uppercase;
+    text-shadow: 0 0 5px var(--accent-color);
+}
+
+.subtitle {
+    color: var(--accent-color);
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+
+.info-panel {
+    background: rgba(255, 170, 0, 0.1);
+    border: 1px solid var(--warning-color);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.info-panel p {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 2rem;
+}
+
+@media (max-width: 768px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+}
+
+.panel {
+    background-color: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+h2, h3 {
+    margin-top: 0;
+    color: var(--accent-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #fff;
+    border-bottom: none;
+}
+
+.input-group {
+    border: 1px solid #222;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.2rem;
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.hint {
+    display: block;
+    font-size: 0.75rem;
+    color: #666;
+    margin-top: 0.2rem;
+    font-style: italic;
+    line-height: 1.2;
+}
+
+input[type="number"],
+input[type="url"],
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #000;
+    border: 1px solid var(--border-color);
+    color: var(--accent-color);
+    font-family: var(--font-family);
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 5px var(--accent-color);
+}
+
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.checkbox-item {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.75rem;
+    border-radius: 4px;
+    border: 1px solid #222;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: bold;
+    user-select: none;
+    color: #fff;
+}
+
+.checkbox-container {
+    margin-top: 0.5rem;
+}
+
+.checkbox-label input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: #000;
+    border: 1px solid var(--border-color);
+}
+
+.checkbox-label:hover input ~ .checkmark {
+    border-color: var(--accent-color);
+}
+
+.checkbox-label input:checked ~ .checkmark {
+    background-color: var(--accent-color);
+    box-shadow: 0 0 5px var(--accent-color);
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkbox-label input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.checkbox-label .checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 4px;
+    height: 10px;
+    border: solid #000;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    background-color: transparent;
+    color: var(--accent-color);
+    border: 2px solid var(--accent-color);
+    font-family: var(--font-family);
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+    background-color: var(--accent-color);
+    color: #000;
+    box-shadow: 0 0 15px var(--accent-color);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.presets-section {
+    margin-top: 1.5rem;
+}
+
+.preset-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.75rem;
+}
+
+.preset-btn {
+    padding: 10px;
+    background: transparent;
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    font-family: var(--font-family);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.preset-btn:hover {
+    background: var(--accent-color);
+    color: #000;
+}
+
+.gauge-container {
+    position: relative;
+    width: 200px;
+    height: 100px;
+    margin: 2rem auto;
+    overflow: hidden;
+}
+
+.gauge-bg,
+.gauge-fill {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    top: 0;
+    left: 0;
+}
+
+.gauge-bg {
+    background-color: #222;
+    border: 1px solid #333;
+}
+
+.gauge-fill {
+    background-color: var(--accent-color);
+    clip-path: polygon(0 50%, 100% 50%, 100% 0, 0 0);
+    transform-origin: center;
+    transform: rotate(0deg);
+    transition: transform 1s ease, background-color 1s ease;
+}
+
+#scoreValue {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.label {
+    font-size: 0.7rem;
+    color: #888;
+    text-transform: uppercase;
+}
+
+#statusMessage {
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid #333;
+    background: #000;
+}
+
+#statusMessage.safe {
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+#statusMessage.warning {
+    color: var(--warning-color);
+    border-color: var(--warning-color);
+}
+
+#statusMessage.danger {
+    color: var(--danger-color);
+    border-color: var(--danger-color);
+}
+
+#statusMessage.waiting {
+    color: #666;
+}
+
+.tips-section {
+    margin-top: 2rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+}
+
+.tips-section ul {
+    padding-left: 1.2rem;
+    color: #ccc;
+}
+
+.tips-section li {
+    margin-bottom: 0.8rem;
+    line-height: 1.4;
+}
+
+.documentation-panel {
+    margin-top: 2rem;
+    border-top: 2px solid #222;
+}
+
+.doc-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.doc-column p {
+    color: #aaa;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.doc-column ul {
+    color: #aaa;
+    font-size: 0.85rem;
+}
+
+.doc-column strong {
+    color: #fff;
+}
+
+.disclaimer {
+    margin-top: 2rem;
+    padding: 1rem;
+    border: 1px solid var(--warning-color);
+    background: rgba(255, 170, 0, 0.1);
+    text-align: center;
+}
+
+.disclaimer p {
+    color: var(--warning-color);
+    margin: 0;
+    font-size: 0.85rem;
+}

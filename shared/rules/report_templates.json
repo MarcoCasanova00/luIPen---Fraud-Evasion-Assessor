@@ -1,0 +1,68 @@
+{
+    "default": {
+        "title": "Fraud Detection Resilience Assessment Report",
+        "header_template": "Assessment Report generated for {target_url}",
+        "summary_template": "This assessment evaluates the resilience of fraud detection controls against various transaction patterns.",
+        "risk_levels": {
+            "critical": {
+                "label": "CRITICAL",
+                "description": "Transaction patterns highly likely to bypass detection",
+                "color": "#ff3333"
+            },
+            "high": {
+                "label": "HIGH",
+                "description": "Transaction patterns may bypass standard controls",
+                "color": "#ff6600"
+            },
+            "medium": {
+                "label": "MEDIUM",
+                "description": "Transaction patterns subject to review",
+                "color": "#ffaa00"
+            },
+            "low": {
+                "label": "LOW",
+                "description": "Transaction patterns align with normal behavior",
+                "color": "#00ff41"
+            }
+        },
+        "finding_categories": {
+            "GEO": {
+                "name": "Geolocation",
+                "severity_impact": "high"
+            },
+            "VEL": {
+                "name": "Velocity",
+                "severity_impact": "high"
+            },
+            "SPE": {
+                "name": "Spending Pattern",
+                "severity_impact": "medium"
+            },
+            "AUT": {
+                "name": "Authentication",
+                "severity_impact": "medium"
+            }
+        },
+        "recommendations": [
+            "Implement additional verification steps for high-risk patterns",
+            "Review transaction velocity rules and thresholds",
+            "Consider multi-factor authentication requirements",
+            "Deploy adaptive limits based on user behavior profiles",
+            "Monitor for coordinated attack patterns"
+        ]
+    },
+    "detailed": {
+        "title": "Detailed Vulnerability Assessment Report",
+        "include_metadata": true,
+        "include_risk_factors": true,
+        "include_mitigation_steps": true,
+        "sections": {
+            "executive_summary": true,
+            "technical_findings": true,
+            "risk_matrix": true,
+            "recommendations": true,
+            "mitigation_plan": true,
+            "next_steps": true
+        }
+    }
+}

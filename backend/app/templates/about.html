@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Fraud Evasion Assessor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">SECURE_PEN_TEST_V2.0</div>
+            <h1>FRAUD EVASION ASSESSOR</h1>
+            <p class="subtitle">Authorized Security Testing Tool</p>
+        </header>
+
+        <main>
+            <section class="panel">
+                <h2>About This Tool</h2>
+
+                <div class="doc-content">
+                    <div class="doc-column">
+                        <h3> Purpose</h3>
+                        <p>The <strong>Fraud Evasion Penetration Testing Tool</strong> is designed for corporate security teams and penetration testers to assess the resilience of fraud detection systems against various attack vectors.</p>
+                        <p>This is a <strong>DEFENSIVE security tool</strong> that helps organizations understand and improve their fraud detection capabilities.</p>
+                    </div>
+
+                    <div class="doc-column">
+                        <h3>Features</h3>
+                        <ul>
+                            <li><strong>Detection Resilience Scoring</strong> - Evaluates how well transaction patterns might bypass fraud detection</li>
+                            <li><strong>Vulnerability Reports</strong> - Provides actionable recommendations for improving fraud controls</li>
+                            <li><strong>GeoIP Integration</strong> - Optional MaxMind GeoLite2 support for IP geolocation</li>
+                            <li><strong>Educational Context</strong> - Explains fraud detection concepts and best practices</li>
+                        </ul>
+                    </div>
+
+                    <div class="doc-column">
+                        <h3>Ethical Use</h3>
+                        <p>This tool must only be used:</p>
+                        <ul>
+                            <li>On systems you own or have explicit written permission to test</li>
+                            <li>For authorized security assessments and educational purposes</li>
+                            <li>In compliance with applicable laws and regulations</li>
+                        </ul>
+                        <p><strong>Unauthorized use is strictly prohibited.</strong></p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel" style="margin-top: 2rem;">
+                <h2>API Documentation</h2>
+                <pre class="code-block">
+Available Endpoints:
+
+GET  /health           - Health check
+GET  /                 - Main interface
+
+POST /api/score        - Calculate detection resilience score
+    Request: { target_url, distance_km, ratio_to_median_purchase_price,
+               retailer_history, has_chip, has_pin, is_online }
+    Response: { success_score, fraud_probability, is_bypassed, confidence }
+
+POST /api/report       - Generate vulnerability report
+    Request: Same as /api/score
+    Response: { report_id, findings, recommendations, risk_profile }
+
+POST /api/geoip/distance - Calculate IP to billing address distance
+    Request: { ip_address, billing_lat, billing_lon }
+    Response: { distance_km, ip_location }
+
+GET  /api/demo-presets - Get available test presets
+                </pre>
+            </section>
+
+            <div style="margin-top: 2rem; text-align: center;">
+                <a href="{{ url_for('web.index') }}" class="btn">Return to Tool</a>
+            </div>
+        </main>
+
+        <footer class="disclaimer">
+            <p><strong>DISCLAIMER:</strong> This tool is for <strong>educational and authorized security testing purposes only</strong>.</p>
+        </footer>
+    </div>
+</body>
+
+</html>

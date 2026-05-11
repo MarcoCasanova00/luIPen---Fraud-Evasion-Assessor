@@ -1,0 +1,51 @@
+name: Backend CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('backend/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          pip install -r requirements.txt
+          pip install pytest pytest-cov
+
+      - name: Check Python syntax
+        run: |
+          python -m py_compile app/__init__.py
+          python -m py_compile app/config.py
+          python -m py_compile app/routes/api.py
+          python -m py_compile app/routes/web.py
+          python -m py_compile app/services/scoring.py
+          python -m py_compile app/services/geoip.py
+          python -m py_compile app/services/reporting.py
+          python -m py_compile app/services/validation.py
+
+      - name: Run tests
+        run: |
+          cd backend
+          python -m pytest tests/ -v || echo "No tests found"

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Evasion Penetration Testing Tool - Demo</title>
+    <link rel="stylesheet" href="assets/css/demo-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <meta name="description" content="Educational demo of fraud detection resilience assessment - Frontend Only">
+    <meta name="robots" content="noindex, nofollow">
+</head>
+
+<body>
+    <div class="demo-banner">
+        <span>FRONTEND DEMO</span> - This is a static demonstration. For full functionality, deploy the backend server.
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="logo">SECURE_PEN_TEST_V2.0</div>
+            <h1>FRAUD EVASION ASSESSOR</h1>
+            <p class="subtitle">Detection Resilience Testing - Educational Demo</p>
+        </header>
+
+        <main>
+            <div class="info-panel">
+                <h3>About This Demo</h3>
+                <p>This is a <strong>client-side demonstration</strong> that simulates fraud detection scoring. All logic runs in your browser. For production use, deploy the full backend.</p>
+                <p><strong>Purpose:</strong> Educational tool for understanding fraud detection concepts.</p>
+            </div>
+
+            <div class="panel input-panel">
+                <form id="fraudForm">
+                    <section class="input-group">
+                        <h3>1. Target Assessment</h3>
+                        <div class="form-group">
+                            <label for="target_url">Target E-commerce URL</label>
+                            <input type="url" id="target_url" name="target_url" placeholder="https://example-shop.com">
+                            <small class="hint">The payment gateway or checkout page being assessed.</small>
+                        </div>
+                    </section>
+
+                    <section class="input-group">
+                        <h3>2. Connection & Geolocation</h3>
+
+                        <div class="form-group">
+                            <label for="distance_from_home">Geo-IP Distance from Home (km)</label>
+                            <input type="number" id="distance_from_home" name="distance_km" step="0.1" value="10.0">
+                            <small class="hint">Distance between billing address and transaction IP.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="distance_from_last_transaction">Geo-IP Dist. from Last Location (km)</label>
+                            <input type="number" id="distance_from_last_transaction" name="distance_from_last_transaction" step="0.1" value="1.0">
+                            <small class="hint">Distance from last known transaction location.</small>
+                        </div>
+
+                        <div class="checkbox-container">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="online_order" name="is_online">
+                                <span class="checkmark"></span>
+                                Online Transaction (CNP)
+                            </label>
+                        </div>
+                    </section>
+
+                    <section class="input-group">
+                        <h3>3. Card Configuration</h3>
+                        <div class="form-group">
+                            <label for="ratio_to_median_purchase_price">Transaction Value Ratio (vs Median)</label>
+                            <input type="number" id="ratio_to_median_purchase_price" name="ratio" step="0.1" value="1.0">
+                            <small class="hint">E.g., $500 / $50 median = 10.0</small>
+                        </div>
+
+                        <div class="checkbox-grid">
+                            <div class="checkbox-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="repeat_retailer" name="retailer_history" checked>
+                                    <span class="checkmark"></span>
+                                    Known Retailer History
+                                </label>
+                            </div>
+
+                            <div class="checkbox-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="used_chip" name="has_chip" checked>
+                                    <span class="checkmark"></span>
+                                    Chip Enabled
+                                </label>
+                            </div>
+
+                            <div class="checkbox-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="used_pin_number" name="has_pin" checked>
+                                    <span class="checkmark"></span>
+                                    PIN Authenticated
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+
+                    <button type="submit" id="analyzeBtn">RUN ASSESSMENT</button>
+                </form>
+            </div>
+
+            <div class="panel result-panel">
+                <h2>Assessment Result</h2>
+                <div class="gauge-container">
+                    <div class="gauge-bg"></div>
+                    <div class="gauge-fill" id="gaugeFill"></div>
+                    <div class="gauge-cover">
+                        <span id="scoreValue">0%</span>
+                        <span class="label">Detection Resilience Score</span>
+                    </div>
+                </div>
+
+                <div id="statusMessage" class="status waiting">READY TO TEST</div>
+
+                <div class="tips-section">
+                    <h3>Vulnerability Report</h3>
+                    <ul id="tipsList">
+                        <li>Configure parameters and run the test to generate a report.</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+
+        <section class="panel presets-section">
+            <h2>Quick Test Presets</h2>
+            <div class="preset-buttons">
+                <button type="button" class="preset-btn" data-preset="legitimate">Low Risk</button>
+                <button type="button" class="preset-btn" data-preset="travel">Travel</button>
+                <button type="button" class="preset-btn" data-preset="large_purchase">Large Purchase</button>
+                <button type="button" class="preset-btn" data-preset="anomaly">Anomaly</button>
+            </div>
+        </section>
+
+        <section class="panel documentation-panel">
+            <h2>Documentation & Methodology</h2>
+            <div class="doc-content">
+                <div class="doc-column">
+                    <h3>How Fraud Detection Works</h3>
+                    <p>Modern fraud detection systems use <strong>Machine Learning (ML)</strong> models to analyze thousands of data points in real-time, looking for <em>anomalies</em> that deviate from normal behavior.</p>
+                    <p>This tool simulates a <strong>Random Forest Classifier</strong> trained on credit card transactions to evaluate fraud detection resilience.</p>
+                </div>
+                <div class="doc-column">
+                    <h3>Key Risk Factors</h3>
+                    <ul>
+                        <li><strong>Geolocation Anomalies:</strong> High distances between billing address and transaction IP.</li>
+                        <li><strong>Velocity Checks:</strong> "Impossible travel" between transaction locations.</li>
+                        <li><strong>Spending Patterns:</strong> Transactions above normal spending thresholds.</li>
+                        <li><strong>Authentication Strength:</strong> Chip & PIN provides strongest verification.</li>
+                    </ul>
+                </div>
+                <div class="doc-column">
+                    <h3>Understanding the Score</h3>
+                    <p><strong>Detection Resilience Score</strong> = <code>1.0 - Fraud Probability</code></p>
+                    <ul>
+                        <li><span style="color: var(--danger-color)">High (>90%)</span>: Highly likely to bypass controls.</li>
+                        <li><span style="color: var(--warning-color)">Medium (50-90%)</span>: May be flagged for review.</li>
+                        <li><span style="color: var(--accent-color)">Low (<50%)</span>: Exhibits multiple risk factors.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <footer class="disclaimer">
+            <p><strong>DISCLAIMER:</strong> This tool is for <strong>educational and authorized security testing purposes only</strong>. Do not use this tool to facilitate actual fraud or attack systems you do not own or have explicit permission to test.</p>
+        </footer>
+    </div>
+
+    <script src="assets/js/demo.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+[
+    {
+        "id": "sample_001",
+        "description": "Low-risk transaction - In-person chip purchase",
+        "category": "low_risk",
+        "parameters": {
+            "target_url": "https://trusted-retailer.com/checkout",
+            "distance_km": 5.0,
+            "distance_from_last_transaction": 2.0,
+            "ratio_to_median_purchase_price": 0.8,
+            "retailer_history": true,
+            "has_chip": true,
+            "has_pin": true,
+            "is_online": false
+        },
+        "expected_score_range": "0.85-1.0"
+    },
+    {
+        "id": "sample_002",
+        "description": "Medium-risk transaction - Online purchase at unknown merchant",
+        "category": "medium_risk",
+        "parameters": {
+            "target_url": "https://new-merchant.com/purchase",
+            "distance_km": 25.0,
+            "distance_from_last_transaction": 10.0,
+            "ratio_to_median_purchase_price": 2.0,
+            "retailer_history": false,
+            "has_chip": false,
+            "has_pin": false,
+            "is_online": true
+        },
+        "expected_score_range": "0.45-0.65"
+    },
+    {
+        "id": "sample_003",
+        "description": "High-risk transaction - Large purchase from foreign IP",
+        "category": "high_risk",
+        "parameters": {
+            "target_url": "https://international-store.com/order",
+            "distance_km": 4500.0,
+            "distance_from_last_transaction": 3000.0,
+            "ratio_to_median_purchase_price": 6.0,
+            "retailer_history": false,
+            "has_chip": false,
+            "has_pin": false,
+            "is_online": true
+        },
+        "expected_score_range": "0.05-0.25"
+    }
+]
